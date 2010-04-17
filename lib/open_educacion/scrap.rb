@@ -69,7 +69,7 @@ module OpenEducacion
           #type = doc.css("td:nth-child(3)").text
           #name = doc.css("td:nth-child(4)").text
           
-          @logger.info OpenEducacion::Centre.new(:code => code, :province => province).to_s
+          @logger.info OpenEducacion::Centre.new(:code => code, :province => province).to_hash.inspect
         end
       end
     end

@@ -86,6 +86,28 @@ module OpenEducacion
       end
     end
     
+    def to_hash
+      {
+       :code                 => @code,
+       :denomination         => denomination,
+       :region               => region,
+       :province             => province,
+       :province_subdivision => province_subdivision,
+       :town                 => town,
+       :address              => address,
+       :url                  => url,
+       :country              => country,
+       :county               => county,
+       :locality             => locality,
+       :postal_code          => postal_code,
+       :ownership            => ownership,
+       :centre_type          => centre_type,
+       :generic_denomination => generic_denomination,
+       :concerted            => concerted,
+       :teachings            => teachings.map(&:to_hash)
+      }
+    end
+    
     def to_s
       "#{denomination} - #{locality} -  #{teachings}"
     end
@@ -93,8 +115,7 @@ module OpenEducacion
     private
     
     def document
-      return @doc if @doc
-      
+      return @doc if @doc      
       http_session          = Net::HTTP.new(URI_CENTERS.host, URI_CENTERS.port)
       http_session.use_ssl  = true
       http                 = http_session.start
@@ -155,6 +176,15 @@ module OpenEducacion
       @concerted       = options[:concerted]
     end
     
+    def to_hash
+      {
+        :level        => level,
+        :area         => area,
+        :teaching     => teaching,
+        :mode         => mode,
+        :concerted    => concerted
+      }
+    end
     def to_s
       "teachings => #{@level} - #{@area} -  #{@teaching} - #{@mode} - #{@concerted}"
     end
