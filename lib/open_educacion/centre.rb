@@ -13,9 +13,9 @@ module OpenEducacion
     end
     
     def denomination
-      #ongoing
+      document.at("tr:nth-child(2) tr:nth-child(2) .datostd").content.strip
     end
-    
+
     def region
       document.at(".tablacentro table tr:nth-child(1) :nth-child(2)").content.strip
     end
@@ -57,20 +57,21 @@ module OpenEducacion
     end
     
     def ownership
-      document.at("").content.strip            
+      document.at("tr:nth-child(6) tr:nth-child(1) :nth-child(2)").content.strip
     end
     
     def centre_type
-      document.at("").content.strip            
+      document.at("tr:nth-child(6) tr:nth-child(2) .datostd").content.strip
     end
     
     def generic_denomination
-      document.at("").content.strip            
+      document.at("tr:nth-child(6) tr:nth-child(3) .datostd").content.strip
     end
     
     def concerted
-      document.at("").content.strip            
+      document.at("tr:nth-child(6) .tablacentro :nth-child(4)").content.strip
     end
+    
     
     
     private
