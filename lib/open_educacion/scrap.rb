@@ -15,6 +15,10 @@ module OpenEducacion
       @center               = {}
       @logger = Logger.new("importar_centros.log")
     end
+    
+    def self.parse
+      new.parse
+    end
 
     def parse
       parse_regions
@@ -64,12 +68,15 @@ module OpenEducacion
         trs_centros.shift
 
         trs_centros.each do |tr_centro|
-          link = tr_centro.search("td:first-child a").first
-          code = $1 if link['href'] =~ /pas\('(\d+)'\)/
-          #type = doc.css("td:nth-child(3)").text
-          #name = doc.css("td:nth-child(4)").text
-          
-          @logger.info OpenEducacion::Centre.new(:code => code, :province => province).to_hash.inspect
+          begin
+            link = tr_centro.search("td:first-child a").first
+            code = $1 if link['href'] =~ /pas\('(\d+)'\)/
+            centre_hash = OpenEducacion::Centre.new(:code => code, :province => province).to_hash            
+            ::Centre.build_from_data(centre_hash).save!
+            @logger.info "code:  #{code}"
+          rescue
+            @logger.info "Fallo importar centro\n#{centre_hash.inspect}\n\n#{$!}\n\n#{$!.backtrace.join('\n')}"
+          end
         end
       end
     end

@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(:version => 20100417163100) do
     t.string   "url"
     t.string   "denomination"
     t.string   "generic_denomination"
+    t.string   "province_subdivision"
     t.string   "country"
     t.string   "region"
     t.string   "province"

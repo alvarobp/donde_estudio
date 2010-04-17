@@ -6,7 +6,7 @@ class CreateCentres < ActiveRecord::Migration
       
       t.string :denomination
       t.string :generic_denomination
-      
+      t.string :province_subdivision
       t.string :country
       t.string :region        # Autonomía
       t.string :province      # Provincia
