@@ -13,7 +13,7 @@ module OpenEducacion
       @regions              = {}
       @provinces            = {}
       @center               = {}
-      @logger = Logger.new("importar_centros.log")
+      @logger = Logger.new("log/importar_centros.log")
     end
     
     def self.parse

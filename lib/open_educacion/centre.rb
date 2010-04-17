@@ -77,11 +77,11 @@ module OpenEducacion
       returning([]) do |teaching|
         rows = document.search("tr:nth-child(8) .datostd")
         while rows.size != 0 do
-          teaching << Teaching.new( :level => (rows.shift.content.strip rescue nil), 
-                                     :area => (rows.shift.content.strip rescue nil), 
-                                     :teaching => (rows.shift.content.strip rescue nil), 
-                                     :mode => (rows.shift.content.strip rescue nil), 
-                                     :concerted => (rows.shift.content.strip rescue nil) )
+          teaching << Teaching.new( :level => clean_blank(rows.shift), 
+                                     :area => clean_blank(rows.shift), 
+                                     :teaching => clean_blank(rows.shift), 
+                                     :mode => clean_blank(rows.shift), 
+                                     :concerted => clean_blank(rows.shift) )
         end
       end
     end
@@ -113,6 +113,10 @@ module OpenEducacion
     end
     
     private
+    
+    def clean_blank(value)
+      value.content.strip.gsub("\302\240", "") rescue nil
+    end
     
     def document
       return @doc if @doc      
