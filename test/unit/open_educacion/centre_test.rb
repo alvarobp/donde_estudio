@@ -67,5 +67,32 @@ class OpenEducacion::CentreTest < ActiveSupport::TestCase
       assert_equal "", @centre.concerted
     end
     
+    should "have 7 teachings" do
+      assert_equal 7, @centre.teachings.size
+    end
+
+    should "have Educación Secundaria Obligatoria" do
+      assert_equal "Educación Secundaria Obligatoria", @centre.teachings.first.teaching
+    end
+
+    should "have  the 'presencial' mode on the first" do
+      assert_equal "Presencial", @centre.teachings.first.mode
+    end
+    
+    should "have  the 'presencial' mode on the last" do
+      assert_equal "Presencial", @centre.teachings.last.mode
+    end
+    
+    should "have Educación Secundaria Enseñanzas de cualificación profesional inicial de la familia administración y gestión" do
+      assert_equal "Enseñanzas de cualificación profesional inicial de la familia administración y gestión", @centre.teachings.last.teaching
+    end
+
+    should "have area" do
+      assert_equal "ADMINISTRACIÓN Y GESTIÓN", @centre.teachings.last.area
+    end
+
+    should "have level" do
+      assert_equal "Ciclos Formativos de Formación Profesional de Grado Medio (LOE)", @centre.teachings[4].level
+    end    
   end    
 end

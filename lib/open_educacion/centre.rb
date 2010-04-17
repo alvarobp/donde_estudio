@@ -72,7 +72,18 @@ module OpenEducacion
       document.at("tr:nth-child(6) .tablacentro :nth-child(4)").content.strip
     end
     
-    
+    def teachings
+      returning([]) do |teaching|
+        rows = document.search("tr:nth-child(8) .datostd")
+        while rows.size != 0 do
+          teaching << Teaching.new( :level => rows.shift.content.strip, 
+                                     :area => rows.shift.content.strip, 
+                                     :teaching => rows.shift.content.strip, 
+                                     :mode => rows.shift.content.strip, 
+                                     :concerted => rows.shift.content.strip )
+        end
+      end
+    end
     
     private
     
@@ -94,5 +105,11 @@ module OpenEducacion
                   :teaching,
                   :mode,
                   :concerted
+                  
+    def initialize(options = {})
+      @level, @area    = options[:level], options[:area]
+      @teaching, @mode = options[:teaching], options[:mode]
+      @concerted       = options[:concerted]
+    end
   end
 end
