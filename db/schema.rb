@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20100417163100) do
     t.string   "address"
     t.string   "postal_code"
     t.string   "ownership"
-    t.boolean  "concerted"
+    t.boolean  "concerted",            :default => false
     t.string   "centre_type"
     t.datetime "created_at"
     t.datetime "updated_at"
