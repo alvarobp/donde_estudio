@@ -40,3 +40,4 @@ Rails::Initializer.run do |config|
 end
 
 require 'core/string'
+require 'should_be_mocked'
