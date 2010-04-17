@@ -1,5 +1,7 @@
 class Centre < ActiveRecord::Base
   
+  has_many :teachings
+  
   def self.build_from_data(data={})
     return nil if data.blank?
     

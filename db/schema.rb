@@ -32,11 +32,12 @@ ActiveRecord::Schema.define(:version => 20100417163100) do
   end
 
   create_table "teachings", :force => true do |t|
+    t.integer  "centre_id"
     t.string   "level"
     t.string   "area"
     t.string   "teaching"
     t.string   "mode"
-    t.string   "concerted"
+    t.boolean  "concerted"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
