@@ -7,12 +7,17 @@ class Centre < ActiveRecord::Base
     
     data = HashWithIndifferentAccess.new(data)
     
-    unless data[:concerted].blank?
-      data[:concerted] = (data[:concerted].sanitize == "si" ? true : false)
-      data[:ownership] = "Centro concertado" if data[:concerted]
+    data[:concerted] = (!data[:concerted].blank? && data[:concerted].sanitize == "si" ? true : false)
+    data[:ownership] = "Centro concertado" if data[:concerted]
+    
+    teachings_data = data.delete(:teachings) || []
+    centre = Centre.new(data)
+    
+    if teachings_data
+      centre.teachings.build(teachings_data.map{|td| Teaching.attributes_from_data(td)})
     end
     
-    Centre.new(data)
+    centre
   end
   
 end

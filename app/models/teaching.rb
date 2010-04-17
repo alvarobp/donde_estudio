@@ -2,14 +2,13 @@ class Teaching < ActiveRecord::Base
   
   belongs_to :centre
   
-  def self.build_from_data(data={})
-    return nil if data.blank?
+  def self.attributes_from_data(data={})
+    return {} if data.blank?
     
     data = HashWithIndifferentAccess.new(data)
     
-    data[:concerted] = (data[:concerted].sanitize == "si" ? true : false) unless data[:concerted].blank?
-    
-    Teaching.new(data)
+    data[:concerted] = (!data[:concerted].blank? && data[:concerted].sanitize == "si") ? true : false
+    data
   end
   
 end
