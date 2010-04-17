@@ -1,11 +1,11 @@
 class CreateTeachings < ActiveRecord::Migration
   def self.up
     create_table :teachings do |t|
-      t.string :level
-      t.string :area
-      t.string :teaching
-      t.string :mode
-      t.string :concerted
+      t.string  :level
+      t.string  :area
+      t.string  :teaching
+      t.string  :mode
+      t.boolean :concerted
       
       t.timestamps
     end
