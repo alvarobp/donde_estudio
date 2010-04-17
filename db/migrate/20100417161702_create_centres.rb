@@ -8,16 +8,16 @@ class CreateCentres < ActiveRecord::Migration
       t.string :generic_denomination
       
       t.string :country
-      t.string :region
-      t.string :province
-      t.string :town
-      t.string :locality
-      t.string :county
+      t.string :region        # Autonomía
+      t.string :province      # Provincia
+      t.string :town          # Municipio
+      t.string :locality      # Localidad
+      t.string :county        # Comarca
       t.string :address
       t.string :postal_code
       
-      t.string :ownership
-      t.boolean :concerted
+      t.string :ownership     # Público || Privado || Concertado
+      t.boolean :concerted, :default => false
       t.string :centre_type
       
       t.timestamps
