@@ -33,7 +33,7 @@ class CentreTest < ActiveSupport::TestCase
     assert_equal @data[:centre_type], centre.centre_type
   end
   
-  def test_build_from_data_concerted
+  def test_build_from_data_with_concerted
     centre = Centre.build_from_data(@data.merge(:ownership => "Centro privado", :concerted => "Si"))
     assert_equal true, centre.concerted
     assert_equal "Centro concertado", centre.ownership
@@ -45,6 +45,12 @@ class CentreTest < ActiveSupport::TestCase
     centre = Centre.build_from_data(@data.merge(:ownership => "Centro publico", :concerted => "si"))
     assert_equal true, centre.concerted
     assert_equal "Centro concertado", centre.ownership
+  end
+  
+  def test_build_from_data_with_indifferent_access
+    @data.delete(:code)
+    centre = Centre.build_from_data(@data.merge('code' => '09876'))
+    assert_equal "09876", centre.code
   end
   
 end
