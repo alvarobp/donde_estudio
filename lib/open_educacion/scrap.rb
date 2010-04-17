@@ -13,6 +13,7 @@ module OpenEducacion
       @regions              = {}
       @provinces            = {}
       @center               = {}
+      @logger = Logger.new("importar_centros.log")
     end
 
     def parse
@@ -56,21 +57,19 @@ module OpenEducacion
     end
 
     def parse_center
-      [provinces.first].each do |province|
+      provinces.each do |province|
         res = @http.post(URI_CENTER_SEARCH.path, query_string(default_search_params.merge('codaut' => province.region.code, 'codprov' => province.code)))
         doc = Nokogiri::HTML(res.body)
         trs_centros = doc.css("table.resultados tr")
         trs_centros.shift
 
         trs_centros.each do |tr_centro|
-          codcen = nil
           link = tr_centro.search("td:first-child a").first
           code = $1 if link['href'] =~ /pas\('(\d+)'\)/
-          type = doc.css("td:nth-child(3)").text
-          name = doc.css("td:nth-child(4)").text
+          #type = doc.css("td:nth-child(3)").text
+          #name = doc.css("td:nth-child(4)").text
           
-          res = @http.post(URI_CENTER_SEARCH.path, query_string(default_search_params.merge('codaut' => province.region.code, 'codprov' => province.code, 'codcen' => code)))
-          @center[code] = Center.new(:code => code, :province => province)
+          @logger.info OpenEducacion::Centre.new(:code => code, :province => province).to_s
         end
       end
     end
