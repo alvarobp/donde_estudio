@@ -1,3 +1,27 @@
+# == Schema Information
+#
+# Table name: centres
+#
+#  id                   :integer(4)      not null, primary key
+#  code                 :string(255)
+#  url                  :string(255)
+#  denomination         :string(255)
+#  generic_denomination :string(255)
+#  country              :string(255)
+#  region               :string(255)
+#  province             :string(255)
+#  town                 :string(255)
+#  locality             :string(255)
+#  county               :string(255)
+#  address              :string(255)
+#  postal_code          :string(255)
+#  ownership            :string(255)
+#  concerted            :boolean(1)      default(FALSE)
+#  centre_type          :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
+#
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CentreTest < ActiveSupport::TestCase

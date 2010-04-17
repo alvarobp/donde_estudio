@@ -5,4 +5,6 @@ tmp/**/*
 tmp/*
 db/*.sqlite3
 config/database.yml
+config/development.sphinx.conf
 db/development_structure.sql
+db/sphinx/*
