@@ -6,11 +6,6 @@ require 'cgi'
 
 module OpenEducacion
   class Scrap
-    URI_CENTERS = URI.parse("https://www.educacion.es/centros/")
-    URI_REGIONS = URI.parse("https://www.educacion.es/centros/selectaut.do")    
-    URI_CENTER = URI.parse("https://educacion.es/centros/saccen.do")
-    URI_CENTER_SEARCH = URI.parse("https://educacion.es/centros/buscar.do") 
-
     def initialize
       http_session          = Net::HTTP.new(URI_CENTERS.host, URI_CENTERS.port)
       http_session.use_ssl  = true
@@ -73,8 +68,8 @@ module OpenEducacion
           code = $1 if link['href'] =~ /pas\('(\d+)'\)/
           type = doc.css("td:nth-child(3)").text
           name = doc.css("td:nth-child(4)").text
-          puts "#{code} - #{name}"
-          #res = @http.post(URI_CENTER_SEARCH.path, query_string(default_search_params.merge('codaut' => province.region.code, 'codprov' => province.code, 'codcen' => code)))
+          
+          res = @http.post(URI_CENTER_SEARCH.path, query_string(default_search_params.merge('codaut' => province.region.code, 'codprov' => province.code, 'codcen' => code)))
           @center[code] = Center.new(:code => code, :province => province)
         end
       end
@@ -117,5 +112,9 @@ module OpenEducacion
       parameters.map{ |k,v| "#{k}=#{CGI::escape(v.to_s)}" }.join('&')
     end
     
+    URI_CENTERS = URI.parse("https://www.educacion.es/centros/")
+    URI_REGIONS = URI.parse("https://www.educacion.es/centros/selectaut.do")    
+    URI_CENTER = URI.parse("https://educacion.es/centros/saccen.do")
+    URI_CENTER_SEARCH = URI.parse("https://educacion.es/centros/buscar.do")  
   end
 end
