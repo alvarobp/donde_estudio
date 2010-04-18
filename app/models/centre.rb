@@ -71,6 +71,35 @@ class Centre < ActiveRecord::Base
     @teachings_without_level ||= (teachings - grouped_teachings_by_level.values.flatten)
   end
   
+  def self.filters_to_sphinx_query(filters)
+    queries = []
+    
+    # Add the centre filters to query
+    filters.each do |filter, values|
+      next unless Centre.filters.include?(filter) || Teaching.filters.include?(filter)
+      
+      filter_queries = []
+      klass, index_field_name = Centre.filters.include?(filter) ? [Centre, "@filter_tags"] : [Teaching, "@teachings_filter_tags"]
+      values.each {|value| filter_queries << "#{index_field_name} *#{klass.filter_tag_for(filter,value)}*" }
+      queries << filter_queries.join(" ")
+    end
+    
+    queries.join(' ')
+  end
+  
+  def self.search_with_filters(options={})
+    options = {:match_mode => :extended}.merge(options)
+
+    text = options.delete(:text)
+    filters = options.delete(:filters)
+    
+    queries = []
+    queries << text unless text.blank?
+    queries << filters_to_sphinx_query(filters) unless filters.blank?
+    
+    search(queries.join(' '), options)
+  end
+  
   def self.export_to_csv
     FasterCSV.open("doc/centros.csv", "w") do |csv|
       Teaching.all.each do |teaching|
