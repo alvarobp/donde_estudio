@@ -26,6 +26,8 @@ class Centre < ActiveRecord::Base
   
   has_many :teachings
   
+  has_filter_tags :province, :locality, :ownership
+  
   define_index do
     indexes :denomination
     indexes :generic_denomination
