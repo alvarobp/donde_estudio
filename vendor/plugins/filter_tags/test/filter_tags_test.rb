@@ -79,8 +79,15 @@ class FilterTagsTest < Test::Unit::TestCase
   def test_serialize_filter_tags_on_save
     centre = Centre.new(:locality => "Valencia", :ownership => "Centro Concertado")
     centre.save
-    
     assert_equal ["locality__valencia", "ownership__centro_concertado"], centre.filter_tags
+    
+    centre = Centre.new(:locality => "Valencia", :ownership => "")
+    centre.save
+    assert_equal ["locality__valencia"], centre.filter_tags
+    
+    centre = Centre.new(:locality => "Valencia", :ownership => nil)
+    centre.save
+    assert_equal ["locality__valencia"], centre.filter_tags
   end
   
 end

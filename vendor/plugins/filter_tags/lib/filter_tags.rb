@@ -20,7 +20,12 @@ module FilterTags
     private
     
     def serialize_filter_tags
-      self.filter_tags = filters.inject([]) {|array, (filter,value)| array << Centre.filter_tag_for(filter, value); array }
+      self.filter_tags = filters.inject([]) do |array, (filter,value)|
+        if filter_tag = self.class.filter_tag_for(filter, value)
+          array << filter_tag
+        end
+        array 
+      end
     end
   end
   
