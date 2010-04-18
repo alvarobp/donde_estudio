@@ -1,27 +1,3 @@
-# == Schema Information
-#
-# Table name: centres
-#
-#  id                   :integer(4)      not null, primary key
-#  code                 :string(255)
-#  url                  :string(255)
-#  denomination         :string(255)
-#  generic_denomination :string(255)
-#  country              :string(255)
-#  region               :string(255)
-#  province             :string(255)
-#  town                 :string(255)
-#  locality             :string(255)
-#  county               :string(255)
-#  address              :string(255)
-#  postal_code          :string(255)
-#  ownership            :string(255)
-#  concerted            :boolean(1)      default(FALSE)
-#  centre_type          :string(255)
-#  created_at           :datetime
-#  updated_at           :datetime
-#
-
 class Centre < ActiveRecord::Base
   
   has_many :teachings
@@ -40,11 +16,12 @@ class Centre < ActiveRecord::Base
     indexes :address
     indexes :ownership
     indexes :centre_type
+    indexes :filter_tags
     indexes teachings.level, :as => :levels
     indexes teachings.area, :as => :areas
     indexes teachings.teaching, :as => :teachings
     indexes teachings.mode, :as => :modes
-    
+    indexes teachings.filter_tags, :as => :teachings_filter_tags
     has :concerted
   end
   
@@ -73,6 +50,26 @@ class Centre < ActiveRecord::Base
     "#{address}, #{postal_code} #{province}"
   end
   
+  def grouped_teachings_by_level
+    if @grouped_teachings.nil?
+      @grouped_teachings = {}
+      unless teachings.empty?
+        teachings.each do |teaching|
+          if !teaching.level.nil? && !teaching.level.strip.empty?
+            @grouped_teachings[teaching.level] ||= []
+            @grouped_teachings[teaching.level] << teaching
+          end
+        end
+      end
+    end
+    
+    @grouped_teachings || {}
+  end
+  
+  def teachings_without_level
+    return [] if teachings.empty?
+    @teachings_without_level ||= (teachings - grouped_teachings_by_level.values.flatten)
+  end
   
   def self.export_to_csv
     FasterCSV.open("doc/centros.csv", "w") do |csv|
@@ -100,3 +97,30 @@ class Centre < ActiveRecord::Base
     centre
   end
 end
+
+# == Schema Information
+#
+# Table name: centres
+#
+#  id                   :integer(4)      not null, primary key
+#  code                 :string(255)
+#  url                  :string(255)
+#  denomination         :string(255)
+#  generic_denomination :string(255)
+#  province_subdivision :string(255)
+#  country              :string(255)
+#  region               :string(255)
+#  province             :string(255)
+#  town                 :string(255)
+#  locality             :string(255)
+#  county               :string(255)
+#  address              :string(255)
+#  postal_code          :string(255)
+#  ownership            :string(255)
+#  concerted            :boolean(1)      default(FALSE)
+#  centre_type          :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  filter_tags          :text
+#
+

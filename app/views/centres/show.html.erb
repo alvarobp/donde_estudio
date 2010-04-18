@@ -22,20 +22,19 @@
     <% unless @centre.teachings.empty? %>
     <h4 class="title1">Enseñanzas impartidas</h4>
     <ul class="learning">
-      <% @centre.teachings.each do |teaching| %>
-      <li class="learning-simple"><%= teaching.teaching.titleize %></li>
+      <% @centre.teachings_without_level.each do |teaching| %>
+        <li class="learning-simple"><%= teaching.teaching.titleize %></li>
       <% end -%>
-      <% if false %>
-      <li class="learning-grade">
-        Ciclos Formativos de Formación Profesional de Grado Medio (LOGSE)
-        <ul class="learning-sublist">
-          <li>Mecanizado</li>
-          <li>Instalación y Mantenimiento Electromecánico de Maquinaria y Conducción de Líneas</li>
-          <li>Desarrollo y Aplicación de Proyectos de Construcción</li>
-          <li>Jardinería</li>
-          <li>Confección</li>
-        </ul>
-      </li>
+      
+      <% @centre.grouped_teachings_by_level.each do |level, teachings| %>
+        <li class="learning-grade">
+          <%= level %>
+          <ul class="learning-sublist">
+            <% teachings.each do |teaching| %>
+            <li><%= teaching.teaching %></li>
+            <% end -%>
+          </ul>
+        </li>
       <% end -%>
     </ul>
     <% end -%>

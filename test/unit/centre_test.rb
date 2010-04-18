@@ -1,27 +1,3 @@
-# == Schema Information
-#
-# Table name: centres
-#
-#  id                   :integer(4)      not null, primary key
-#  code                 :string(255)
-#  url                  :string(255)
-#  denomination         :string(255)
-#  generic_denomination :string(255)
-#  country              :string(255)
-#  region               :string(255)
-#  province             :string(255)
-#  town                 :string(255)
-#  locality             :string(255)
-#  county               :string(255)
-#  address              :string(255)
-#  postal_code          :string(255)
-#  ownership            :string(255)
-#  concerted            :boolean(1)      default(FALSE)
-#  centre_type          :string(255)
-#  created_at           :datetime
-#  updated_at           :datetime
-#
-
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CentreTest < ActiveSupport::TestCase
@@ -104,4 +80,85 @@ class CentreTest < ActiveSupport::TestCase
     assert_equal "teaching2", centre.teachings[1].teaching
   end
   
+  def test_grouped_teachings_by_level
+    teachings = {
+      :teachings => [
+        {:level => "level1", :teaching => "teaching1"},
+        {:level => "level2", :teaching => "teaching2"},
+        {:level => "level1", :teaching => "teaching3"},
+        {:level => "level1", :teaching => "teaching4"},
+        {:level => "level2", :teaching => "teaching5"},
+        {:level => nil, :teaching => "teaching6"},
+        {:level => "", :teaching => "teaching7"}
+      ]
+    }
+    
+    centre = Centre.build_from_data(@data.merge(teachings))
+    
+    grouped_teachings = centre.grouped_teachings_by_level
+    
+    assert_equal 2, grouped_teachings.keys.size
+    assert_equal ['level1', 'level2'], grouped_teachings.keys.sort
+    
+    # level1
+    assert_equal 3, grouped_teachings['level1'].size
+    assert grouped_teachings['level1'].map(&:teaching).include?("teaching1")
+    assert grouped_teachings['level1'].map(&:teaching).include?("teaching4")
+    assert grouped_teachings['level1'].map(&:teaching).include?("teaching3")
+    
+    # level2
+    assert_equal 2, grouped_teachings['level2'].size
+    assert grouped_teachings['level2'].map(&:teaching).include?("teaching2")
+    assert grouped_teachings['level2'].map(&:teaching).include?("teaching5")
+    
+    centre = Centre.new
+    assert_equal({}, centre.grouped_teachings_by_level)
+    
+  end
+  
+  def test_teachings_without_level
+    teachings = {
+      :teachings => [
+        {:level => "level1", :teaching => "teaching1"},
+        {:level => "level2", :teaching => "teaching2"},
+        {:level => "level1", :teaching => "teaching3"},
+        {:level => "level1", :teaching => "teaching4"},
+        {:level => "level2", :teaching => "teaching5"},
+        {:level => nil, :teaching => "teaching6"},
+        {:level => "", :teaching => "teaching7"}
+      ]
+    }
+    centre = Centre.build_from_data(@data.merge(teachings))
+    
+    assert_equal 2, centre.teachings_without_level.size
+    assert_equal ['teaching6', 'teaching7'], centre.teachings_without_level.map(&:teaching).sort
+  end
+  
 end
+
+# == Schema Information
+#
+# Table name: centres
+#
+#  id                   :integer(4)      not null, primary key
+#  code                 :string(255)
+#  url                  :string(255)
+#  denomination         :string(255)
+#  generic_denomination :string(255)
+#  province_subdivision :string(255)
+#  country              :string(255)
+#  region               :string(255)
+#  province             :string(255)
+#  town                 :string(255)
+#  locality             :string(255)
+#  county               :string(255)
+#  address              :string(255)
+#  postal_code          :string(255)
+#  ownership            :string(255)
+#  concerted            :boolean(1)      default(FALSE)
+#  centre_type          :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  filter_tags          :text
+#
+
