@@ -38,6 +38,11 @@ class Centre < ActiveRecord::Base
     indexes :address
     indexes :ownership
     indexes :centre_type
+    indexes teachings.level, :as => :levels
+    indexes teachings.area, :as => :areas
+    indexes teachings.teaching, :as => :teachings
+    indexes teachings.mode, :as => :modes
+    
     has :concerted
   end
   
