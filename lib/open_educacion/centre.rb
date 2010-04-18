@@ -107,6 +107,10 @@ module OpenEducacion
       }
     end
     
+    def request_params
+      default_search_params.merge(:codcen => @code)
+    end
+    
     private
     
     def clean_blank(value)
@@ -118,7 +122,7 @@ module OpenEducacion
       http_session          = Net::HTTP.new(URI_CENTER_SEARCH.host, URI_CENTER_SEARCH.port)
       http_session.use_ssl  = true
       http                  = http_session.start
-      res = http.post(URI_CENTER_SEARCH.path, query_string(default_search_params.merge(:codcen => @code)))
+      res = http.post(URI_CENTER_SEARCH.path, query_string(request_params))
       @doc = Nokogiri::HTML(res.body)
     end
    
