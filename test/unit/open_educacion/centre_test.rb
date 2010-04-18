@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class OpenEducacion::CentreTest < ActiveSupport::TestCase
   context "A centre" do
     setup do
-      @centre = OpenEducacion::Centre.new("16000899")
-      @centre.stubs(:document).returns(Nokogiri::HTML(File.open("test/fixtures/course.html")))
+      @centre = OpenEducacion::Centre.new("48010027")
+      #@centre.stubs(:document).returns(Nokogiri::HTML(File.open("test/fixtures/course.html")))
     end
     
     should "have denomination" do

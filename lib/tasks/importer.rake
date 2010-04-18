@@ -7,7 +7,8 @@ namespace :scrap do
   task :education  => :environment do |t|
     centres = OpenEducacion::Centres.all
     pbar = ProgressBar.new("Centres parsed", centres.size*2)
-    hydra = Typhoeus::Hydra.new(:max_concurrency => 500)
+    hydra = Typhoeus::Hydra.new(:max_concurrency => 160)
+    centre_logger = Logger.new("log/importar_centros.log")
     @@centres_hash = []
     
     centres.each do |centre_code|
@@ -18,7 +19,11 @@ namespace :scrap do
                                       :disable_ssl_peer_verification => true)
       request.on_complete do |response|
         centre.instance_eval{ @doc = Nokogiri::HTML(response.body) }
-        @@centres_hash << centre
+        if centre.denomination.nil?
+          centre_logger.info "#{centre.code}, "
+        else
+          @@centres_hash << centre        
+        end
         pbar.inc
       end
       
