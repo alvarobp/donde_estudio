@@ -41,8 +41,38 @@ class Centre < ActiveRecord::Base
     has :concerted
   end
   
+  def to_array
+    [
+     code,
+     denomination,
+     region,
+     province,
+     province_subdivision,
+     town,
+     address,
+     url,
+     country,
+     county,
+     locality,
+     postal_code,
+     ownership,
+     centre_type,
+     generic_denomination,
+     concerted
+    ]
+  end
+  
   def full_address
     "#{address}, #{postal_code} #{province}"
+  end
+  
+  
+  def self.export_to_csv
+    FasterCSV.open("doc/centros.csv", "w") do |csv|
+      Teaching.all.each do |teaching|
+        csv << teaching.centre.to_array + teaching.to_array
+      end
+    end
   end
   
   def self.build_from_data(data={})
@@ -62,5 +92,4 @@ class Centre < ActiveRecord::Base
     
     centre
   end
-  
 end

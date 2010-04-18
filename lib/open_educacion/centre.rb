@@ -189,6 +189,8 @@ module OpenEducacion
         :concerted    => concerted
       }
     end
+    
+    
     def to_s
       "teachings => #{@level} - #{@area} -  #{@teaching} - #{@mode} - #{@concerted}"
     end
