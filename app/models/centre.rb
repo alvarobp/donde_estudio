@@ -50,6 +50,26 @@ class Centre < ActiveRecord::Base
     "#{address}, #{postal_code} #{province}"
   end
   
+  def grouped_teachings_by_level
+    if @grouped_teachings.nil?
+      @grouped_teachings = {}
+      unless teachings.empty?
+        teachings.each do |teaching|
+          if !teaching.level.nil? && !teaching.level.strip.empty?
+            @grouped_teachings[teaching.level] ||= []
+            @grouped_teachings[teaching.level] << teaching
+          end
+        end
+      end
+    end
+    
+    @grouped_teachings || {}
+  end
+  
+  def teachings_without_level
+    return [] if teachings.empty?
+    @teachings_without_level ||= (teachings - grouped_teachings_by_level.values.flatten)
+  end
   
   def self.export_to_csv
     FasterCSV.open("doc/centros.csv", "w") do |csv|
