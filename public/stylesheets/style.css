@@ -43,6 +43,7 @@ a {text-decoration: none;}
 .filter-title {margin-bottom: 5px; margin-top: 0;}
 */
 
+/*
 .left-col {font-family: Arial; width: 200px; padding: 10px; margin-left: 20px; float: left;}
 .filter-title {background: #555; color: #eee; padding: 2px 5px; margin: 0;}
 .filter-list {list-style: none; padding: 0; background: #fff; margin: 12px 0;}
@@ -52,6 +53,19 @@ a {text-decoration: none;}
 #ownership-filter li {border-right: 5px solid #a52a2a; text-align: left; border-left: 5px solid #a52a2a;}
 #mode-filter li {border-right: 5px solid #008000; text-align: left; border-left: 5px solid #008000;}
 #level-filter li {border-right: 5px solid #ff8c00; text-align: left; border-left: 5px solid #ff8c00;}
+*/
+
+.left-col {font-family: Arial; width: 250px; padding: 15px; margin-left: 20px; float: left;}
+.filter-title {margin: 0px; Color: #eee; background: #999; padding: 2px 5px;}
+.filter-list {list-style: none; padding: 0; background: #fff; margin: 14px 0; font-size: 12px;}
+.filter-list li {margin-bottom: 3px; background: #e5e5e5;}
+.filter-list a {color: #333; display: block; padding: 5px;;}
+.filter-list a:hover {background: #ccc;}
+#ownership-filter {padding-left: 7px; border-left: 4px solid #a52a2a;}
+#mode-filter {padding-left: 7px; border-left: 4px solid #008000;}
+#level-filter {padding-left: 7px; border-left: 4px solid #ff8c00;}
+
+
 
 .info-box {padding: 15px 40px;}
 

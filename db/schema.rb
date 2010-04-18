@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100417163100) do
+ActiveRecord::Schema.define(:version => 20100418131527) do
 
   create_table "centres", :force => true do |t|
     t.string   "code"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20100417163100) do
     t.string   "centre_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "filter_tags"
   end
 
   create_table "teachings", :force => true do |t|
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20100417163100) do
     t.boolean  "concerted"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "filter_tags"
   end
 
 end
