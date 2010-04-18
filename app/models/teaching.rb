@@ -17,6 +17,7 @@ class Teaching < ActiveRecord::Base
   
   belongs_to :centre
   
+  has_filter_tags :mode, :level, :teaching
   
   def to_array
     [

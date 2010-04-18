@@ -43,5 +43,4 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
-require 'core/string'
 require 'should_be_mocked'
