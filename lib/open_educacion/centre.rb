@@ -6,11 +6,10 @@ require 'cgi'
 
 module OpenEducacion
   class Centre
-    attr_accessor :code, :province, :doc
+    attr_accessor :code, :doc
 
-    def initialize(options = {})
-      @code     = options[:code]
-      @province = options[:province]
+    def initialize(code)
+      @code = code
     end
     
     def denomination
@@ -77,11 +76,11 @@ module OpenEducacion
       returning([]) do |teaching|
         rows = document.search("tr:nth-child(8) .datostd")
         while rows.size != 0 do
-          teaching << Teaching.new( :level => clean_blank(rows.shift), 
-                                     :area => clean_blank(rows.shift), 
-                                     :teaching => clean_blank(rows.shift), 
-                                     :mode => clean_blank(rows.shift), 
-                                     :concerted => clean_blank(rows.shift) )
+          teaching << OpenEducacion::Teaching.new(:level => clean_blank(rows.shift), 
+                                   :area => clean_blank(rows.shift), 
+                                   :teaching => clean_blank(rows.shift), 
+                                   :mode => clean_blank(rows.shift), 
+                                   :concerted => clean_blank(rows.shift))
         end
       end
     end
@@ -108,10 +107,6 @@ module OpenEducacion
       }
     end
     
-    def to_s
-      "#{denomination} - #{locality} -  #{teachings}"
-    end
-    
     private
     
     def clean_blank(value)
@@ -119,81 +114,45 @@ module OpenEducacion
     end
     
     def document
-      return @doc if @doc      
-      http_session          = Net::HTTP.new(URI_CENTERS.host, URI_CENTERS.port)
+      return @doc if defined?(@doc)
+      http_session          = Net::HTTP.new(URI_CENTER_SEARCH.host, URI_CENTER_SEARCH.port)
       http_session.use_ssl  = true
-      http                 = http_session.start
-      res = http.post(URI_CENTER_SEARCH.path, query_string(default_search_params.merge('codaut' => @province.region.code, 'codprov' => @province.code, 'codcen' => @code)))
+      http                  = http_session.start
+      res = http.post(URI_CENTER_SEARCH.path, query_string(default_search_params.merge(:codcen => @code)))
       @doc = Nokogiri::HTML(res.body)
     end
    
-    def default_search_params
-      { "simostrar"       => "si",
-        "codaut"          => "16",
-        "codprov"         => "46",
-        "codcen"          => "",
-        "codcen2"         => "",
-        "denomiespe"      => "",
-        "ssel_natur"      => "0",
-        "sconcerta"       => "0",
-        "tipocentro"      => "0",
-        "combosub"        => "",
-        "combomuni"       => "",
-        "comboloc"        => "0",
-        "comboniv"        => "-1",
-        "combogra"        => "",
-        "comboens"        => "-1",
-        "combopais"       => "",
-        "comboislas"      => "",
-        "comboprovin"     => "",
-        "nombreaut"       => "COMUNIDAD VALENCIANA", # Se puede omitir
-        "nombrepro"       => "VALENCIA", # Se puede omitir
-        "textotipocentro" => "todos",
-        "textosub"        => "",
-        "textomunicipio"  => "",
-        "textolocalidad"  => "todos",
-        "textonivel"      => "todos",
-        "textogrado"      => "",
-        "textoensenanza"  => "todos",
-        "textopais"       => "",
-        "textonaturaleza" => "todos",
-        "textoconcertado" => "todos" }
+    def default_search_params 
+      {
+        :codaut	=>"00",
+        :codcen	=>"52004792",
+        :codprov	=>"00",
+        :codprovincia	=>"19",
+        :comboens	=>"-1",
+        :comboniv	=>"-1",
+        :limite	=>"100",
+        :nombreaut	=>"",
+        :nombrepro	=>"",	
+        :sconcerta	=>"0",
+        :simostrar	=>"no",
+        :texto	=>"",	
+        :textocomarca	=>"",	
+        :textoensenanza	=>"todos",
+        :textolocalidad	=>"",
+        :textomunicipio	=>"",
+        :textonaturaleza	=>"todos",
+        :textonivel	=>"todos",
+        :textopais	=>"",
+        :textosub	=>"",
+        :textotipocentro	=>"todos",
+        :tipocaso=>"0",
+      }      
     end
     
     def query_string(parameters={})
       parameters.map{ |k,v| "#{k}=#{CGI::escape(v.to_s)}" }.join('&')
     end
-    URI_CENTERS = URI.parse("https://www.educacion.es/centros/")
+    
     URI_CENTER_SEARCH = URI.parse("https://educacion.es/centros/buscar.do")    
-  end
-  
-  class Teaching
-    attr_accessor :level,
-                  :area,
-                  :teaching,
-                  :mode,
-                  :concerted
-                  
-    def initialize(options = {})
-      @level, @area    = options[:level], options[:area]
-      @teaching, @mode = options[:teaching], options[:mode]
-      @concerted       = options[:concerted]
-    end
-    
-    def to_hash
-      {
-        :level        => level,
-        :area         => area,
-        :teaching     => teaching,
-        :mode         => mode,
-        :concerted    => concerted
-      }
-    end
-    
-    
-    def to_s
-      "teachings => #{@level} - #{@area} -  #{@teaching} - #{@mode} - #{@concerted}"
-    end
-    
   end
 end
