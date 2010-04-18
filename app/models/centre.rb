@@ -9,18 +9,18 @@ class Centre < ActiveRecord::Base
     indexes :generic_denomination
     indexes :country
     indexes :region
-    indexes :province
+    indexes :province, :facet => true
     indexes :town
-    indexes :locality
+    indexes :locality, :facet => true
     indexes :county
     indexes :address
     indexes :ownership
     indexes :centre_type
     indexes :filter_tags
-    indexes teachings.level, :as => :levels
+    indexes teachings.level, :as => :levels, :facet => true
     indexes teachings.area, :as => :areas
-    indexes teachings.teaching, :as => :teachings
-    indexes teachings.mode, :as => :modes
+    indexes teachings.teaching, :as => :teachings, :facet => true
+    indexes teachings.mode, :as => :modes, :facet => true
     indexes teachings.filter_tags, :as => :teachings_filter_tags
     has :concerted
   end
@@ -69,6 +69,44 @@ class Centre < ActiveRecord::Base
   def teachings_without_level
     return [] if teachings.empty?
     @teachings_without_level ||= (teachings - grouped_teachings_by_level.values.flatten)
+  end
+  
+  def self.filters_to_sphinx_query(filters)
+    queries = []
+    
+    # Add the centre filters to query
+    filters.each do |filter, values|
+      next unless Centre.filters.include?(filter) || Teaching.filters.include?(filter)
+      
+      filter_queries = []
+      klass, index_field_name = Centre.filters.include?(filter) ? [Centre, "@filter_tags"] : [Teaching, "@teachings_filter_tags"]
+      values.each {|value| filter_queries << "#{index_field_name} *#{klass.filter_tag_for(filter,value)}*" }
+      queries << ( (filter_queries.size > 1) ? " (#{filter_queries.join(" | ")}) " : filter_queries.first )
+    end
+    
+    queries.join(' ')
+  end
+  
+  def self.sphinx_options(options={})
+    options = {:match_mode => :extended}.merge(options)
+
+    text = options.delete(:text)
+    filters = options.delete(:filters)
+    
+    queries = []
+    queries << text unless text.blank?
+    queries << filters_to_sphinx_query(filters) unless filters.blank?
+    
+    [queries.join(' '), options]
+  end
+  
+  def self.search_with_filters(options={})
+    search(*sphinx_options(options))
+  end
+  
+  def self.facets_with_filters(options={})
+    options.delete(:page)
+    facets(*sphinx_options(options))
   end
   
   def self.export_to_csv

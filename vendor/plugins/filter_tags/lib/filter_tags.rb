@@ -20,7 +20,12 @@ module FilterTags
     private
     
     def serialize_filter_tags
-      self.filter_tags = filters.inject([]) {|array, (filter,value)| array << "#{filter}:#{value}"; array }
+      self.filter_tags = filters.inject([]) do |array, (filter,value)|
+        if filter_tag = self.class.filter_tag_for(filter, value)
+          array << filter_tag
+        end
+        array 
+      end
     end
   end
   
@@ -31,12 +36,12 @@ module FilterTags
     
     def filter_tag_for(filter, value)
       if @filters.map(&:to_s).include?(filter.to_s)
-        "#{filter}:#{filter_tag_value(value)}"
+        "#{filter}__#{filter_tag_value(value)}"
       end
     end
     
     def filter_tag_to_value(filter_tag)
-      if @filters.any?{ |filter| filter_tag =~ /^#{filter}:([^\s]+)/ }
+      if @filters.any?{ |filter| filter_tag =~ /^#{filter}__([^\s]+)/ }
         $1
       end
     end

@@ -1,7 +1,10 @@
 class CentresController < ApplicationController
   
+  before_filter :set_filters, :only => [:index]
+  
   def index
-    @centres = Centre.search(params[:q], :page => params[:page], :per_page => 20)
+    @centres = Centre.search_with_filters(:text => params[:q], :filters => @filters,
+      :page => params[:page], :per_page => 20)
   end
   
   def show

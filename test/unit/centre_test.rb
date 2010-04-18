@@ -134,6 +134,32 @@ class CentreTest < ActiveSupport::TestCase
     assert_equal ['teaching6', 'teaching7'], centre.teachings_without_level.map(&:teaching).sort
   end
   
+  def test_filters_to_sphinx_query
+    expected_queries = ["@filter_tags *province__malaga*", "(@filter_tags *locality__alameda* | @filter_tags *locality__almogia*)", "@teachings_filter_tags *mode__presencial*"]
+    query = Centre.filters_to_sphinx_query(:province => "malaga", :locality => ["alameda", "almogia"], :mode => "presencial")
+    expected_queries.each {|eq| assert query.include?(eq)}
+  end
+  
+  def test_search_with_filters
+    Centre.expects(:search).with("some words #{Centre.filters_to_sphinx_query(:province => "malaga", :locality => "alameda")}", 
+      has_entries(:match_mode => :extended, :per_page => 100, :page => 2) )
+    
+    Centre.search_with_filters(:text => "some words", 
+      :filters => {:province => "malaga", :locality => "alameda"}, 
+      :per_page => 100, :page => 2
+    )
+  end
+  
+  def test_facets_with_filters
+    Centre.expects(:facets).with("some words #{Centre.filters_to_sphinx_query(:province => "malaga", :locality => "alameda")}", 
+      has_entries(:match_mode => :extended, :per_page => 100) )
+    
+    Centre.facets_with_filters(:text => "some words", 
+      :filters => {:province => "malaga", :locality => "alameda"}, 
+      :per_page => 100, :page => 2
+    )
+  end
+  
 end
 
 # == Schema Information
