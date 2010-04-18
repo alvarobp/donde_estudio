@@ -7,12 +7,11 @@
     <%= filter_link("Concertado", :ownership, "centro_concertado") %>
   </ul>
   
-  <% if false %>
   <ul class="filter-list" id="mode-filter">
-    <li><a href="">Presencial</a></li>
-    <li><a href="">No presencial</a></li>
-  </ul>    
-
+    <%= filter_link("Presencial", :mode, "presencial") %>
+    <%#= filter_link("No Presencial", :mode, "mode__no_presencial") %>
+  </ul>
+  <% if false %>
   <ul class="filter-list" id="level-filter">
     <li><a href="">MÃºsica de Grado Medio</a></li>        
     <li class="filter-selected"><a href="">&#8226; Estudios Superiores de Artes PlÃ¡sticas y DiseÃ±o</a></li>  

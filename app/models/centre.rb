@@ -9,18 +9,18 @@ class Centre < ActiveRecord::Base
     indexes :generic_denomination
     indexes :country
     indexes :region
-    indexes :province
+    indexes :province, :facet => true
     indexes :town
-    indexes :locality
+    indexes :locality, :facet => true
     indexes :county
     indexes :address
     indexes :ownership
     indexes :centre_type
     indexes :filter_tags
-    indexes teachings.level, :as => :levels
+    indexes teachings.level, :as => :levels, :facet => true
     indexes teachings.area, :as => :areas
-    indexes teachings.teaching, :as => :teachings
-    indexes teachings.mode, :as => :modes
+    indexes teachings.teaching, :as => :teachings, :facet => true
+    indexes teachings.mode, :as => :modes, :facet => true
     indexes teachings.filter_tags, :as => :teachings_filter_tags
     has :concerted
   end
@@ -87,7 +87,7 @@ class Centre < ActiveRecord::Base
     queries.join(' ')
   end
   
-  def self.search_with_filters(options={})
+  def self.sphinx_options(options={})
     options = {:match_mode => :extended}.merge(options)
 
     text = options.delete(:text)
@@ -97,7 +97,16 @@ class Centre < ActiveRecord::Base
     queries << text unless text.blank?
     queries << filters_to_sphinx_query(filters) unless filters.blank?
     
-    search(queries.join(' '), options)
+    [queries.join(' '), options]
+  end
+  
+  def self.search_with_filters(options={})
+    search(*sphinx_options(options))
+  end
+  
+  def self.facets_with_filters(options={})
+    options.delete(:page)
+    facets(*sphinx_options(options))
   end
   
   def self.export_to_csv
