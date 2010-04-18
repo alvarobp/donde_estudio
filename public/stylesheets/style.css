@@ -1,0 +1,65 @@
+/*
+-------------------------------------
+Mayhem
+-------------------------------------
+Description:		
+Filename:			style.css
+Version: 			1.0
+Date:				04 Mar, 2009 , 17:43
+
+*/
+
+body {margin: 0; color: #333;}
+a {text-decoration: none;}
+
+
+
+.main-box {border: 1px soid #ccc; padding: 15px; width: 600px; height: 250px; margin: 150px auto 0; text-align: center; background: url(../images/logo_main.jpg) no-repeat 35px 5px;}
+.main-logo {margin-bottom: 10px;}
+.main-logo img {margin-right: 90px; margin-bottom: 15px;}
+.search-area {width: 250px;}
+#main-search-area {margin-top: 120px;}
+.search-button {}
+.search-examples {color: #ccc; font-size: 12px; text-align: left; margin-top: 3px;}
+#main-search-examples {width: 315px; margin: 3px auto 0;}
+.main-message {margin: 20px 0 5px;}
+
+.header {border-bottom: 1px solid #ccc; padding: 3px 8px 6px; margin-bottom: 3px;}
+.logo img {width: 230px; float: left;}
+#header-search-area {margin-top: 11px;}
+.search-box {margin-left: 250px; padding: 7px 0 0 10px;}
+
+.results-box {padding: 3px 0 0 20px; float: left;}
+.results-list {list-style: none; margin: 0; padding: 0;}
+.result-info {list-style: none; padding: 1px 0; line-height: 5px;}
+.result-name h3 {margin-bottom: 0;}
+.result-name h3 a {color: #990000;}
+.result-name h3 a:hover {color: #ff0000;}
+.result-titularidad {color: #bbb; font-style: italic; font-size: .9em;}
+.result-type {font-family: arial; color: #888; font-size: 12px;}
+
+.first-filter {list-style: none; padding: 0; font-family: Arial; background: #ddd; width: 180px; padding: 10px; margin-left: 20px; float: left;}
+.filter-title {margin-bottom: 5px; margin-top: 0;}
+
+.info-box {padding: 15px 40px;}
+
+
+.map-box {width: 400px; float: right; border-left: 20px solid white; border-bottom: 20px solid white;}
+.map {float: right; border: 1px solid #ccc; width: 400px; height: 400px;}
+
+.info-title {border-bottom: 1px dotted #ccc;}
+.name {color: #990000; font-size: 20px; margin: 0;}
+.titularidad {color: #bbb; font-style: italic; font-size:18px; margin: 0;}
+.type {margin-top: 5px; margin-bottom: 15px;}
+
+.info-text {border-bottom: 1px dotted #ccc; padding-bottom: 15px;}
+.informacion-ficha {list-style: none; padding: 0 0 0 10px; line-height: 18px;}
+.titulo-informacion-ficha {font-weight: bold;}
+
+.title1 {margin-bottom: 5px; color: #555;}
+.learning {line-height: 20px; list-style: none; padding: 0 0 0 10px; color: #666; margin: 0;}
+
+.where {line-height: 20px; list-style: none; padding: 0; color: #888; margin: 0 0 0 20px; font-family: arial; text-align:;}
+
+
+
