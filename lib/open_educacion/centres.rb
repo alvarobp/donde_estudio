@@ -22,7 +22,10 @@ module OpenEducacion
     
     def self.document
       return @doc if defined?(@doc)
+      
+      # very heavy html lets save some time if we managed to have it already like a fixture
       return @doc = Nokogiri::HTML(File.open(HTML_FIXTURE)) if File.exists?(HTML_FIXTURE)
+      
       http_session          = Net::HTTP.new(URI_CENTER_SEARCH.host, URI_CENTER_SEARCH.port)
       http_session.use_ssl  = true
       http                  = http_session.start
