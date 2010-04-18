@@ -56,18 +56,18 @@ class FilterTagsTest < Test::Unit::TestCase
   def test_filter_tag_for
     assert_nil Centre.filter_tag_for(:notfilter, "Wadus")
     
-    assert_equal "locality:valencia", Centre.filter_tag_for(:locality, "Valencia")
-    assert_equal "locality:madrid", Centre.filter_tag_for(:locality, "MADRID")
-    assert_equal "locality:castellon_de_la_plana", Centre.filter_tag_for(:locality, "Castellón de la Plana")
-    assert_equal "ownership:centro_publico", Centre.filter_tag_for(:ownership, "Centro Público")
+    assert_equal "locality__valencia", Centre.filter_tag_for(:locality, "Valencia")
+    assert_equal "locality__madrid", Centre.filter_tag_for(:locality, "MADRID")
+    assert_equal "locality__castellon_de_la_plana", Centre.filter_tag_for(:locality, "Castellón de la Plana")
+    assert_equal "ownership__centro_publico", Centre.filter_tag_for(:ownership, "Centro Público")
   end
   
   def test_filter_tag_to_value
-    assert_nil Centre.filter_tag_to_value("notfilter:wadus")
+    assert_nil Centre.filter_tag_to_value("notfilter__wadus")
     
-    assert_equal "valencia", Centre.filter_tag_to_value("locality:valencia")
-    assert_equal "centro_publico", Centre.filter_tag_to_value("ownership:centro_publico")
-    assert_equal "castellon_de_la_plana", Centre.filter_tag_to_value("locality:castellon_de_la_plana")
+    assert_equal "valencia", Centre.filter_tag_to_value("locality__valencia")
+    assert_equal "centro_publico", Centre.filter_tag_to_value("ownership__centro_publico")
+    assert_equal "castellon_de_la_plana", Centre.filter_tag_to_value("locality__castellon_de_la_plana")
   end
   
   def test_filters_instance_method
@@ -80,7 +80,7 @@ class FilterTagsTest < Test::Unit::TestCase
     centre = Centre.new(:locality => "Valencia", :ownership => "Centro Concertado")
     centre.save
     
-    assert_equal ["locality:valencia", "ownership:centro_concertado"], centre.filter_tags
+    assert_equal ["locality__valencia", "ownership__centro_concertado"], centre.filter_tags
   end
   
 end
