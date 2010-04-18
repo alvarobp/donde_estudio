@@ -1,18 +1,3 @@
-# == Schema Information
-#
-# Table name: teachings
-#
-#  id         :integer(4)      not null, primary key
-#  centre_id  :integer(4)
-#  level      :string(255)
-#  area       :string(255)
-#  teaching   :string(255)
-#  mode       :string(255)
-#  concerted  :boolean(1)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 require File.dirname(__FILE__) + '/../test_helper'
 
 class TeachingTest < ActiveSupport::TestCase
@@ -61,3 +46,20 @@ class TeachingTest < ActiveSupport::TestCase
   end
   
 end
+
+# == Schema Information
+#
+# Table name: teachings
+#
+#  id          :integer(4)      not null, primary key
+#  centre_id   :integer(4)
+#  level       :string(255)
+#  area        :string(255)
+#  teaching    :string(255)
+#  mode        :string(255)
+#  concerted   :boolean(1)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  filter_tags :text
+#
+
