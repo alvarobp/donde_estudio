@@ -1,14 +1,14 @@
 require 'progressbar'
 require 'typhoeus'
 require 'nokogiri'
-require 'ruby-debug'
 
 namespace :scrap do
   desc 'Fetches all educacion.es/centros info'
   task :education  => :environment do |t|
     centres = OpenEducacion::Centres.all
-    pbar = ProgressBar.new("Centres parsed", centres.size)
+    pbar = ProgressBar.new("Centres parsed", centres.size*2)
     hydra = Typhoeus::Hydra.new(:max_concurrency => 500)
+    @@centres_hash = []
     
     centres.each do |centre_code|
       centre = OpenEducacion::Centre.new(centre_code)
@@ -18,12 +18,17 @@ namespace :scrap do
                                       :disable_ssl_peer_verification => true)
       request.on_complete do |response|
         centre.instance_eval{ @doc = Nokogiri::HTML(response.body) }
-        centre.to_hash
-        #::Centre.build_from_data().save!
+        @@centres_hash << centre
         pbar.inc
       end
+      
       hydra.queue request
-      hydra.run
+    end
+    hydra.run
+
+    @@centres_hash.each do |cen|
+      Centre.build_from_data(cen.to_hash).save!
+      pbar.inc
     end
     pbar.finish
   end
