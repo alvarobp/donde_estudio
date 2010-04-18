@@ -81,7 +81,7 @@ class Centre < ActiveRecord::Base
       filter_queries = []
       klass, index_field_name = Centre.filters.include?(filter) ? [Centre, "@filter_tags"] : [Teaching, "@teachings_filter_tags"]
       values.each {|value| filter_queries << "#{index_field_name} *#{klass.filter_tag_for(filter,value)}*" }
-      queries << filter_queries.join(" ")
+      queries << ( (filter_queries.size > 1) ? " (#{filter_queries.join(" | ")}) " : filter_queries.first )
     end
     
     queries.join(' ')

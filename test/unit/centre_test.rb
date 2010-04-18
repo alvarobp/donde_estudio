@@ -135,8 +135,7 @@ class CentreTest < ActiveSupport::TestCase
   end
   
   def test_filters_to_sphinx_query
-    expected_queries = ["@filter_tags *province__malaga*", "@filter_tags *locality__alameda*", 
-      "@filter_tags *locality__almogia*", "@teachings_filter_tags *mode__presencial*"]
+    expected_queries = ["@filter_tags *province__malaga*", "( @filter_tags *locality__alameda* | @filter_tags *locality__almogia* )", "@teachings_filter_tags *mode__presencial*"]
     query = Centre.filters_to_sphinx_query(:province => "malaga", :locality => ["alameda", "almogia"], :mode => "presencial")
     expected_queries.each {|eq| assert query.include?(eq)}
   end

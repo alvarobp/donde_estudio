@@ -4,18 +4,18 @@
   </div>
 
   <div class="info-title">
-    <h3 class="name"><%= @centre.denomination %></h3>
-    <h4 class="titularidad"><%= @centre.ownership %></h4>
-    <h4 class="type"><%= @centre.centre_type %></h4>
+    <h3 class="name"><%= titleize_string(@centre.denomination) %></h3>
+    <h4 class="titularidad"><%= titleize_string(@centre.ownership) %></h4>
+    <h4 class="type"><%= titleize_string(@centre.centre_type) %></h4>
   </div>
   
   <div class="info-text">
     
     <h4 class="title1"></h4>
     <ul class="where">
-      <% if !@centre.county.blank? %><li class="learning-simple"><%= @centre.county %></li><% end -%>
-      <li class="learning-simple"><%= @centre.locality %></li>
-      <li class="learning-simple"><%= @centre.address.titleize %></li>
+      <% if !@centre.county.blank? %><li class="learning-simple"><%= titleize_string(@centre.county) %></li><% end -%>
+      <li class="learning-simple"><%= titleize_string(@centre.locality) %></li>
+      <li class="learning-simple"><%= titleize_string(@centre.address) %></li>
       <li class="learning-simple"><%= @centre.postal_code %></li>
     </ul>
     
@@ -23,7 +23,7 @@
     <h4 class="title1">Enseñanzas impartidas</h4>
     <ul class="learning">
       <% @centre.teachings_without_level.each do |teaching| %>
-        <li class="learning-simple"><%= teaching.teaching.titleize %></li>
+        <li class="learning-simple"><%= titleize_string(teaching.teaching) %></li>
       <% end -%>
       
       <% @centre.grouped_teachings_by_level.each do |level, teachings| %>
@@ -31,7 +31,7 @@
           <%= level %>
           <ul class="learning-sublist">
             <% teachings.each do |teaching| %>
-            <li><%= teaching.teaching %></li>
+            <li><%= titleize_string(teaching.teaching) %></li>
             <% end -%>
           </ul>
         </li>
