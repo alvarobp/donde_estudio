@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Transitional//EN" "http://www.w2.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w2.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Resultados de la búsqueda</title>
+  <%= stylesheet_link_tag "style.css" %>
+</head>
+
+<body>
+  <div class="header">
+    <div class="logo">
+      <img src="/images/logo_search.jpg">
+    </div>
+    
+    <div class="search-box">
+      <form action="<%= centres_url %>">
+        <input type="text" name="q" value="<%= params[:q] %>" class="search-area" id="header-search-area" />
+        <button class="search-button">Buscar</button>
+        <div class="search-examples" id="header-search-examples">aquí van los ejemplos de búsqueda :)</div>
+      </form>
+    </div>
+  </div> <!--fin del header-->
+
+  <div class="wrap">
+    <%= yield %>
+  </div>
+
+</body>

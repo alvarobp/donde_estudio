@@ -1,0 +1,7 @@
+<li>
+  <ul class="result-info">
+    <li class="result-name"><h3><a href="<%= centre_url(centre) %>"><%= centre.denomination.titleize %> <% if centre.concerted %><span class="result-titularidad">Concertado</span><% end -%></a></h3></li>
+    <li class="result-location"><p><%= centre.full_address.humanize %></p></li>
+    <li class="result-type"><p><%= centre_teachings_in_result(centre) %></p></li>
+  </ul>
+</li>

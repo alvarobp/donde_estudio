@@ -1,0 +1,20 @@
+<div class="left-col">
+  <ul class="first-filter">
+    <li><h3 class="filter-title">Filtros</h3></li>
+    <li>iueyb fouwbf</li>
+    <li>wefljbwefl</li>
+    <li>fweonf woefn</li>
+  </ul>
+</div>
+
+<div class="results-box">
+  <ul class="results-list">
+    <% if @centres.blank? %>
+      No se han encontrado centros con los criterios de búsqueda indicados.
+    <% else %>
+      <%= render :partial => "centres/result", :collection => @centres, :as => :centre %>
+    <% end -%>
+  </ul>
+  
+  <%= will_paginate(@centres) %>
+</div>

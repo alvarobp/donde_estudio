@@ -1,0 +1,53 @@
+<div class="info-box">
+  <div class="map-box">
+    <iframe class="map" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.es/maps?f=q&amp;source=s_q&amp;hl=es&amp;q=<%= @centre.full_address %>&amp;z=15&amp;output=embed"></iframe>
+  </div>
+
+  <div class="info-title">
+    <h3 class="name"><%= @centre.denomination %></h3>
+    <h4 class="titularidad"><%= @centre.ownership %></h4>
+    <h4 class="type"><%= @centre.centre_type %></h4>
+  </div>
+  
+  <div class="info-text">
+    
+    <h4 class="title1"></h4>
+    <ul class="where">
+      <% if !@centre.county.blank? %><li class="learning-simple"><%= @centre.county %></li><% end -%>
+      <li class="learning-simple"><%= @centre.locality %></li>
+      <li class="learning-simple"><%= @centre.address.titleize %></li>
+      <li class="learning-simple"><%= @centre.postal_code %></li>
+    </ul>
+    
+    <% unless @centre.teachings.empty? %>
+    <h4 class="title1">Enseñanzas impartidas</h4>
+    <ul class="learning">
+      <% @centre.teachings.each do |teaching| %>
+      <li class="learning-simple"><%= teaching.teaching.titleize %></li>
+      <% end -%>
+      <% if false %>
+      <li class="learning-grade">
+        Ciclos Formativos de Formación Profesional de Grado Medio (LOGSE)
+        <ul class="learning-sublist">
+          <li>Mecanizado</li>
+          <li>Instalación y Mantenimiento Electromecánico de Maquinaria y Conducción de Líneas</li>
+          <li>Desarrollo y Aplicación de Proyectos de Construcción</li>
+          <li>Jardinería</li>
+          <li>Confección</li>
+        </ul>
+      </li>
+      <% end -%>
+    </ul>
+    <% end -%>
+  </div> <!--fin de info-text-->
+  <% if false %>
+  <div class="coments">
+    <h3>Comentarios</h4>
+      <div class="coment-box">
+        <p class="coment-name"></p>
+        <p class="coment-text"></p>
+      </div>
+    </div>
+  </div>
+  <% end -%>
+</div> <!-- .info-box -->

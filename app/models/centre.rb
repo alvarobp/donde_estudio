@@ -41,6 +41,10 @@ class Centre < ActiveRecord::Base
     has :concerted
   end
   
+  def full_address
+    "#{address}, #{postal_code} #{province}"
+  end
+  
   def self.build_from_data(data={})
     return nil if data.blank?
     
