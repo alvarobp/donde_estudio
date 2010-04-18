@@ -15,8 +15,7 @@ class ApplicationController < ActionController::Base
   def filters_params(options = {})
     @filters ||= {}
     
-    filters = {}
-    @filters.each {|k,v| filters[k] = v.dup}
+    filters = @filters.inject({}) {|o, (k,v)| o[k] = v.dup; o}
     
     if options[:add]
       options[:add].each do |filter, value|
@@ -32,6 +31,8 @@ class ApplicationController < ActionController::Base
     
     if options[:remove]
       options[:remove].each do |filter, value|
+        next if filters[filter].nil?
+        
         if value.is_a?(String)
           filters[filter].delete(value)
         elsif value.is_a?(Array)
@@ -41,8 +42,8 @@ class ApplicationController < ActionController::Base
       end
     end
     
-    filters_for_params = filters.inject({}) do |o, (filter, values)|
-      o[filter] = values.join(' ') unless values.blank?
+    filters_for_params = filters.inject({}) do |o, (filter, value)|
+      o[filter] = value.is_a?(Array) ? value.join(' ') : value unless value.blank?
       o
     end
   end
@@ -59,8 +60,7 @@ class ApplicationController < ActionController::Base
       end
     end
     
-    #debugger
-    puts
+    @filters[:q] = params[:q] unless params[:q].blank?
   end
   
 end

@@ -11,41 +11,44 @@
     <%= filter_link("Presencial", :mode, "presencial") %>
     <%#= filter_link("No Presencial", :mode, "mode__no_presencial") %>
   </ul>
-  <% if false %>
+  
+  <% if @available_filters.keys.include?(:levels) %>
   <ul class="filter-list" id="level-filter">
-    <li><a href="">MÃºsica de Grado Medio</a></li>        
-    <li class="filter-selected"><a href="">&#8226; Estudios Superiores de Artes PlÃ¡sticas y DiseÃ±o</a></li>  
-    <li><a href="">Idiomas Nivel BÃ¡sico</a></li>         
-    <li><a href="">Idiomas Primer Nivel</a></li>        
-    <li><a href="">MÃºsica Grado Profesional</a></li>
-    <li class="level-expand"><a href="">&laquo; Ver todos &raquo;</a></li>              
+    <% @available_filters[:levels].each do |level| %>
+      <% next if level.nil? || level.strip.empty? %>
+      <%= filter_link(level, :level, Teaching.filter_tag_value(level)) %>
+    <% end -%>
   </ul>  
-
+  <% end -%>
+  
+  <% if @available_filters.keys.include?(:teachings) %>
   <ul class="filter-list" id="teaching-filter">
-    <li><a href="">Desarrollo de Aplicaciones InformÃ¡ticas</a></li>
-    <li><a href="">Desarrollo de Productos ElectrÃ³nicos</a></li>
-    <li><a href="">Productos Carpintería y Mueble</a></li>        
-    <li><a href="">Instalación Fluidos, Térmicas, Manut.</a></li>
-    <li><a href="">Instalaciones Térmicas y Fluidos</a></li> 
-    <li class="teaching-expand"><a href="">&laquo; Ver todos &raquo;</a></li>
-  </ul>
-
-  <ul class="filter-list" id="province-filter">
-    <li><a href="">Valencia</a></li>
-    <li><a href="">Murcia</a></li>
-    <li><a href="">Castellon</a></li>        
-    <li><a href="">A coruña</a></li>
-    <li><a href="">Ciudad Real</a></li> 
-    <li class="province-expand"><a href="">&laquo; Ver todos &raquo;</a></li>
-  </ul>
-
-  <ul class="filter-list" id="town-filter">
-    <li><a href="">Valencia</a></li>
-    <li><a href="">Godella</a></li>
-    <li><a href="">Burjasot</a></li>
-    <li><a href="">Rocafort</a></li>
-    <li><a href="">Gata de Gorgos</a></li> 
-    <li class="town-expand"><a href="">&laquo; Ver todos &raquo;</a></li>
+    <% @available_filters[:teachings].each do |teaching| %>
+      <% next if teaching.nil? || teaching.strip.empty? %>
+      <%= filter_link(teaching, :teaching, Teaching.filter_tag_value(teaching)) %>
+    <% end -%>
+    <% if false %><li class="teaching-expand"><a href="">&laquo; Ver todos &raquo;</a></li><% end -%>
   </ul>
   <% end -%>
+  
+  <% if @available_filters.keys.include?(:province) %>
+  <ul class="filter-list" id="province-filter">
+    <% @available_filters[:province].each do |province| %>
+      <% next if province.nil? || province.strip.empty? %>
+      <%= filter_link(province, :province, Centre.filter_tag_value(province)) %>
+    <% end -%>
+    <% if false %><li class="province-expand"><a href="">&laquo; Ver todos &raquo;</a></li><% end -%>
+  </ul>
+  <% end -%>
+  
+  <% if @available_filters.keys.include?(:locality) %>
+  <ul class="filter-list" id="town-filter">
+    <% @available_filters[:locality].each do |locality| %>
+      <% next if locality.nil? || locality.strip.empty? %>
+      <%= filter_link(locality, :locality, Centre.filter_tag_value(locality)) %>
+    <% end -%>
+    <% if false %><li class="town-expand"><a href="">&laquo; Ver todos &raquo;</a></li><% end -%>
+  </ul>
+  <% end -%>
+  
 </div>

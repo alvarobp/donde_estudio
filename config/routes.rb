@@ -1,10 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
   
-  map.resources :centres, :only => [:index, :show]
+  map.home "", :controller => "site"
   
-  # DELETE ME
-  map.connect '/home', :controller => 'site'
-  #/
+  map.resources :centres, :only => [:index, :show]
   
   map.root :controller => "site"
   

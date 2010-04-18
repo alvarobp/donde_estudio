@@ -18,6 +18,12 @@
       </form>
     </div>
     
+    <% if flash[:alert] %>
+    <div class="alert">
+      <p><%= flash[:alert] %></p>
+    </div>
+    <% end -%>
+    
     <div class="main-message"></div>
     
   </div>

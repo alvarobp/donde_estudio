@@ -11,8 +11,4 @@ module CentresHelper
     "<li#{li_class}><a href=\"#{ centres_url(filters_params( {:"#{present ? "remove" : "add"}" => {filter => value} })) }\">#{text}</a></li>"
   end
   
-  # def filter_link(text, filter, value, options={})
-  #   li_class = @filters[filter].include?(value) ? ' class="filter-selected"' : ''
-  #   "<li#{li_class}><a href=\"#{centres_url(filters_params(options.merge({:add => {filter => value}})))}\">#{text}</a></li>"
-  # end
 end
