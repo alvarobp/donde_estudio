@@ -12,9 +12,11 @@ Date:				04 Mar, 2009 , 17:43
 body {margin: 0; color: #333; font-family: Times;}
 a {text-decoration: none;}
 
+.nofooter {text-align: center; padding-top: 5px;}
+.nofooter a {color: #bbb; margin: 5px;}
+.nofooter a:hover {color: #aaa;}
 
-
-.main-box {border: 1px soid #ccc; padding: 15px; width: 600px; height: 250px; margin: 150px auto 0; text-align: center; background: url(../images/logo_main.jpg) no-repeat 35px 5px;}
+.main-box {border: 1px soid #ccc; padding: 15px; width: 600px; height: 250px; margin: 130px auto 0; text-align: center; background: url(../images/logo_main.jpg) no-repeat 35px 5px;}
 .main-logo {margin-bottom: 10px;}
 .main-logo img {margin-right: 90px; margin-bottom: 15px;}
 .search-area {width: 250px;}
@@ -29,34 +31,18 @@ a {text-decoration: none;}
 #header-search-area {margin-top: 11px;}
 .search-box {margin-left: 250px; padding: 7px 0 0 10px;}
 
+.wrap-results {width: 950px;}
 .results-box {padding: 3px 0 0 20px; float: left;}
 .results-list {list-style: none; padding: 0;}
-.result-info {list-style: none; padding: 0; margin-bottom: 20px;}
+.result-info {list-style: none; padding: 0; margin-bottom: 20px; width: 600px;}
 .result-info p {margin: 3px;}
 .result-name h3 {margin: 0;}
 .result-name h3 a {color: #990000;}
 .result-name h3 a:hover {color: #ff0000;}
 .result-titularidad {color: #bbb; font-style: italic; font-size: .9em;}
-.result-type {font-family: arial; color: #888; font-size: 12px; width: 600px; line-height: 15px; }
+.result-type {font-family: arial; color: #888; font-size: 12px; line-height: 15px; }
 
 .main-box .alert { width: 400px; margin: 50px auto; color: #770000; background: #FFBBBB; padding: 4px; border: 2px solid #CC4444; }
-
-/*
-.first-filter {list-style: none; padding: 0; font-family: Arial; background: #ddd; width: 180px; padding: 10px; margin-left: 20px; float: left;}
-.filter-title {margin-bottom: 5px; margin-top: 0;}
-*/
-
-/*
-.left-col {font-family: Arial; width: 200px; padding: 10px; margin-left: 20px; float: left;}
-.filter-title {background: #555; color: #eee; padding: 2px 5px; margin: 0;}
-.filter-list {list-style: none; padding: 0; background: #fff; margin: 12px 0;}
-.filter-list li {margin-bottom: 4px; background: #ddd;}
-.filter-list a {color: #333; display: block; padding: 5px 7px 5px 5px;;}
-.filter-list a:hover {background: #777; color: #eee;}
-#ownership-filter li {border-right: 5px solid #a52a2a; text-align: left; border-left: 5px solid #a52a2a;}
-#mode-filter li {border-right: 5px solid #008000; text-align: left; border-left: 5px solid #008000;}
-#level-filter li {border-right: 5px solid #ff8c00; text-align: left; border-left: 5px solid #ff8c00;}
-*/
 
 .left-col {font-family: Arial; width: 250px; padding: 15px; margin-left: 20px; float: left;}
 .filter-title {margin: 0px; Color: #fff; background: #999; padding: 2px 5px;}
@@ -87,12 +73,14 @@ a {text-decoration: none;}
 .titularidad {color: #bbb; font-style: italic; font-size:18px; margin: 0;}
 .type {margin-top: 5px; margin-bottom: 15px;}
 
-.info-text {border-bottom: 1px dotted #ccc; padding-bottom: 15px;}
+.info-text {border-bottom: 1px dotted #ccc; padding-bottom: 15px; margin-bottom: 15px;}
 .informacion-ficha {list-style: none; padding: 0 0 0 10px; line-height: 18px;}
 .titulo-informacion-ficha {font-weight: bold;}
 
 .title1 {margin-bottom: 5px; color: #555;}
 .learning {line-height: 20px; list-style: none; padding: 0 0 0 10px; color: #666; margin: 0;}
 
-.where {line-height: 20px; list-style: none; padding: 0; color: #888; margin: 0 0 0 20px; font-family: arial; text-align:;}
+.where {line-height: 20px; list-style: none; padding: 0; color: #888; margin: 0 0 0 0px; font-family: arial; text-align:; border-left: 4px solid #ccc; padding-left: 10px;}
 
+.coments {margin-top: 20px;}
+.coments h3 {margin-top: 0px; padding: 15px 0 0 25px;}
