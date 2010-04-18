@@ -17,6 +17,17 @@ class Teaching < ActiveRecord::Base
   
   belongs_to :centre
   
+  
+  def to_array
+    [
+     level,
+     area,
+     teaching,
+     mode,
+     concerted
+    ]
+  end     
+  
   def self.attributes_from_data(data={})
     return {} if data.blank?
     
