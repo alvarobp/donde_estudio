@@ -30,13 +30,15 @@ a {text-decoration: none;}
 .search-box {margin-left: 250px; padding: 7px 0 0 10px;}
 
 .results-box {padding: 3px 0 0 20px; float: left;}
-.results-list {list-style: none; margin: 0; padding: 0;}
-.result-info {list-style: none; padding: 1px 0; line-height: 5px;}
-.result-name h3 {margin-bottom: 0;}
+.results-list {list-style: none; padding: 0;}
+.result-info {list-style: none; padding: 0; margin-bottom: 20px;}
+.result-info p {margin: 3px;}
+.result-name h3 {margin: 0;}
 .result-name h3 a {color: #990000;}
 .result-name h3 a:hover {color: #ff0000;}
 .result-titularidad {color: #bbb; font-style: italic; font-size: .9em;}
-.result-type {font-family: arial; color: #888; font-size: 12px; width: 600px;}
+.result-type {font-family: arial; color: #888; font-size: 12px; width: 600px; line-height: 15px; }
+
 
 /*
 .first-filter {list-style: none; padding: 0; font-family: Arial; background: #ddd; width: 180px; padding: 10px; margin-left: 20px; float: left;}
@@ -56,17 +58,23 @@ a {text-decoration: none;}
 */
 
 .left-col {font-family: Arial; width: 250px; padding: 15px; margin-left: 20px; float: left;}
-.filter-title {margin: 0px; Color: #eee; background: #999; padding: 2px 5px;}
+.filter-title {margin: 0px; Color: #fff; background: #999; padding: 2px 5px;}
 .filter-list {list-style: none; padding: 0; background: #fff; margin: 14px 0; font-size: 12px;}
 .filter-list li {margin-bottom: 3px; background: #e5e5e5;}
 .filter-list a {color: #333; display: block; padding: 5px;;}
 .filter-list a:hover {background: #ccc;}
-#ownership-filter {padding-left: 7px; border-left: 4px solid #a52a2a;}
-#mode-filter {padding-left: 7px; border-left: 4px solid #008000;}
-#level-filter {padding-left: 7px; border-left: 4px solid #ff8c00;}
-
-
-
+#ownership-filter {padding-left: 5px; border-left: 4px solid #a52a2a;}
+#mode-filter {padding-left: 5px; border-left: 4px solid #008000;}
+#level-filter {padding-left: 5px; border-left: 4px solid #ff8c00;}
+#teaching-filter {padding-left: 5px; border-left: 4px solid #ff4500;}
+#province-filter {padding-left: 5px; border-left: 4px solid #1e90ff;}
+#town-filter {padding-left: 5px; border-left: 4px solid #87cefa;} 	
+.filter-selected a {background: #bbb;}
+.filter-selected a:hover {}
+.level-expand a {text-align: center; padding: 1px 0; background: #ff8c00;}
+.teaching-expand a {text-align: center; padding: 1px 0; background: #ff4500;}
+.province-expand a {text-align: center; padding: 1px 0; background: #1e90ff;}
+.town-expand a {text-align: center; padding: 1px 0; background: #87cefa;} 
 .info-box {padding: 15px 40px;}
 
 
